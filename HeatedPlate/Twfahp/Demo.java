@@ -6,5 +6,4 @@ public class Demo {
 		// TODO Auto-generated method stub
 		System.out.println("This is Demo of the program from the package Twfahp");
 	}
-
 }
