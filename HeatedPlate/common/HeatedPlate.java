@@ -18,25 +18,28 @@ public abstract class HeatedPlate {
 		try {
 			if(args.length<10) throw new RuntimeException(message);
 			for(int i=0;i<args.length;i++) {
-				if(args[i].equals("-d")) {
-					d=true;
-					dimension=Integer.parseInt(args[i+1]);
-				}
-				else if(args[i].equals("-l")) {
-					l=true;
-					left=Integer.parseInt(args[i+1]);
-				}
-				else if(args[i].equals("-r")) {
-					r=true;
-					right=Integer.parseInt(args[i+1]);
-				}
-				else if(args[i].equals("-t")) {
-					t=true;
-					top=Integer.parseInt(args[i+1]);
-				}
-				else if(args[i].equals("-b")) {
-					b=true;
-					bottom=Integer.parseInt(args[i+1]);
+				switch(args[i]){
+					case 1: "-d";
+						d = true;
+						dimension=Integer.parseInt(args[i + 1);
+						break;
+					case 2: "-l";
+						l = true;
+						left=Integer.parseInt(args[i+1]);
+						break;
+					case 3: "-r";
+						r = true;
+						right=Integer.parseInt(args[i+1]);
+						break;
+					case 4: "-t";
+						t = true;
+						right=Integer.parseInt(args[i+1]);
+						break;
+					case 5: "-b";
+						b = true;
+						right=Integer.parseInt(args[i+1]);
+						break;
+					default: break;
 				}
 			}
 			if(!d || !l || !r || !t || !b) {
@@ -46,7 +49,6 @@ public abstract class HeatedPlate {
 		}
 		catch(Exception e) {
 			throw new RuntimeException(message);
-			
 		}
 	}
 	public abstract void simulate();
