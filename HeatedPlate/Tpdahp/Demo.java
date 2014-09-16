@@ -12,7 +12,7 @@ public class Demo {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Running first Demo that simulates Heated Plate with temperatures in doubles");
-			HeatedPlate tpda=new TpdaHeatedPlate(args);
+			HeatedPlate tpda=new DoubleArray(args);
 			tpda.simulate();
 			tpda.printResults();
 		}

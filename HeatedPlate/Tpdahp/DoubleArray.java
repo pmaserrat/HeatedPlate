@@ -9,10 +9,10 @@ import common.HeatedPlate;
  * example in the assignment.
  * 
  */
-public class TpdaHeatedPlate extends HeatedPlate {
+public class DoubleArray extends HeatedPlate {
 	double[][] oldPlate, newPlate;
 
-	public TpdaHeatedPlate(String args[]) {
+	public DoubleArray(String args[]) {
 		super(args);
 	}
 
