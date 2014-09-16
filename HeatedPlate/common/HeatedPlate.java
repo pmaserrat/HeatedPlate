@@ -21,7 +21,7 @@ public abstract class HeatedPlate {
 				if(args[i].equals("-d")) {
 					d=true;
 					dimension=Integer.parseInt(args[i+1]);
-				}
+				} 
 				else if(args[i].equals("-l")) {
 					l=true;
 					left=Integer.parseInt(args[i+1]);
