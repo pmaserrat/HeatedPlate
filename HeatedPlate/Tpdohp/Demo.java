@@ -7,38 +7,13 @@ import common.HeatedPlate;
  * Use doubles to hold temperature values
  *
  */
-public class Demo extends HeatedPlate {
-	//TODO
-	
-	public Demo(String args[]) {
-		super(args);
-	}
-
-	@Override
-	public void simulate() {		
-		//TODO 
-	}
-	
-	private void initialize() {
-		//TODO
-	}
-	
-	//TODO change the datatype for swap method parameters
-	private void swap(double[][] oldPlate,double[][] newPlate) {
-		//TODO
-	}
-
-	@Override
-	public void printResults() {
-		// TODO Print heated plate temperatures.
-	}
-
+public class Demo {
 	public static void main(String[] args) {
 		try {
-			System.out.println("Running first Demo that simulates Heated Plate with temperatures using objects");
-			HeatedPlate first=new Demo(args);
-			first.simulate();
-			first.printResults();
+			System.out.println("Running first Demo that simulates Heated Plate using an object that has attributes referring to each of its four neighboring lattice-point objects. Use doubles to hold temperature values (Tpdohp)");
+			HeatedPlate demo=new DoubleObject(args);
+			demo.simulate();
+			demo.printResults();
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());

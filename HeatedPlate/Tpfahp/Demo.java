@@ -3,42 +3,15 @@ package Tpfahp;
 import common.HeatedPlate;
 
 /**
- * The program simulates HeatedPlate algorithm using floating point computations on an array of floats.
+ * The program simulates HeatedPlate algorithm with floating point computations on an array of Floats (Twfahp).
  */
-public class Demo extends HeatedPlate{
-
-	float oldlate;
-	float newPlate;
-	
-	public Demo(String args[]) {
-		super(args);
-	}
-
-	@Override
-	public void simulate() {		
-		//TODO 
-	}
-	
-	private void initialize() {
-		//TODO
-	}
-	
-	//TODO change the datatype for swap method parameters
-	private void swap(float[][] oldPlate,float[][] newPlate) {
-		//TODO
-	}
-
-	@Override
-	public void printResults() {
-		// TODO Print heated plate temperatures.
-	}
-
+public class Demo {
 	public static void main(String[] args) {
 		try {
-			System.out.println("Running first Demo that simulates Heated Plate with temperatures using floats");
-			HeatedPlate first=new Demo(args);
-			first.simulate();
-			first.printResults();
+			System.out.println("Running first Demo that simulates Heated Plate with floating point computations on an array of Floats (Twfahp)");
+			HeatedPlate demo=new FloatArray(args);
+			demo.simulate();
+			demo.printResults();
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
