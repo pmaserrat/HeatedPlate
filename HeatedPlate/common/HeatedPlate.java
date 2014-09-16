@@ -11,6 +11,18 @@ public abstract class HeatedPlate {
 		super();
 	}
 	
+	//Used when running simulation from GUI (5th program) to instantiate heated plate from 
+	//parameters entered by user on the GUI. 
+	public HeatedPlate(int dimension,int left,int right,int top,int bottom ) {
+		super();
+		this.dimension=dimension;
+		this.left=left;
+		this.right=right;
+		this.top=top;
+		this.bottom=bottom;
+	}
+	
+	//Used when running simulation from command line.
 	public HeatedPlate(String[] args) {
 		boolean d = false,l = false,r=false,t=false,b=false;
 		String message="Invalid Arguments entered. Please enter the correct arguments and run it again.\n Syntax java <packageName>.Demo -d # -l # -r # -t # -b #";
