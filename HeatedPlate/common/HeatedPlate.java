@@ -55,12 +55,12 @@ public abstract class HeatedPlate {
 				throw new RuntimeException(message);
 			}
 			if(dimension == 0) {
-				System.out.println("It appears that your plate doesn't have any dimensions. Did it fall into a black hole? \r\n\r\n When you get a new one, you can try again.")
+				System.out.println("It appears that your plate doesn't have any dimensions. Did it fall into a black hole? \r\n\r\n When you get a new one, you can try again.");
 			}
 			if(dimension == 1) {
 				double avgTemp;
 				avgTemp = (top + bottom + left + right) / 4;
-				System.out.println("Oh! That's an easy one: " + avgTemp.ToString());
+				System.out.println("Oh! That's an easy one: " + avgTemp);
 			}
 			System.out.println("Arguments: dimension - "+dimension+", left - "+left+", right - "+right+", top - "+top+", bottom - "+bottom);
 		}
