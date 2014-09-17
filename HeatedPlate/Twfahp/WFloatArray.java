@@ -11,7 +11,7 @@ public class WFloatArray extends HeatedPlate {
 	
 	@Override
 	public void simulate() {
-		//Changing the ints into Floats
+		//Changing the int values into usable Floats
 		Float topFloat = new Float(top);
 		Float bottomFloat = new Float(bottom);
 		Float leftFloat = new Float(left);
@@ -26,15 +26,18 @@ public class WFloatArray extends HeatedPlate {
 		// Initialize the temperatures of the edge values and the plate itself
 		for (int i = 0; i < oldPlate.length; i++) {
 			for (int j = 0; j < oldPlate[i].length; j++) {
-				if (i == 0)
+				if (i == 0){
 					oldPlate[i][j] = topFloat;
-				if (i == oldPlate.length - 1)
+				}
+				if (i == oldPlate.length - 1){
 					oldPlate[i][j] = bottomFloat;
-
-				if (j == 0)
+				}
+				if (j == 0){
 					oldPlate[i][j] = leftFloat;
-				if (j == oldPlate[i].length - 1)
+				}
+				if (j == oldPlate[i].length - 1){
 					oldPlate[i][j] = rightFloat;
+				}
 			}
 		}
 		newPlate = oldPlate;

@@ -21,21 +21,23 @@ public class FloatArray extends HeatedPlate {
 		// Initialize the temperatures of the edge values and the plate itself
 		for (int i = 0; i < oldPlate.length; i++) {
 			for (int j = 0; j < oldPlate[i].length; j++) {
-				if (i == 0)
+				if (i == 0){
 					oldPlate[i][j] = top;
-				if (i == oldPlate.length - 1)
+				}
+				if (i == oldPlate.length - 1){
 					oldPlate[i][j] = bottom;
-
-				if (j == 0)
+				}
+				if (j == 0){
 					oldPlate[i][j] = left;
-				if (j == oldPlate[i].length - 1)
+				}
+				if (j == oldPlate[i].length - 1){
 					oldPlate[i][j] = right;
+				}
 			}
 		}
 		newPlate = oldPlate;
 
-		// Loop until exit criteria are met, updating each newPlate cell from
-		// the
+		// Loop until exit criteria are met, updating each newPlate cell from the
 		// average temperatures of the corresponding neighbors in oldPlate
 		int count = 0;
 		while (count < 200) {
@@ -51,7 +53,6 @@ public class FloatArray extends HeatedPlate {
 			oldPlate = temp;
 			count++;
 		}
-
 	}
 
 	@Override
