@@ -2,8 +2,6 @@ package Tpdahp;
 
 import common.HeatedPlate;
 
-;
-
 /**
  * This class simulates heated plate using double values as requested in first
  * example in the assignment.
@@ -22,21 +20,24 @@ public class DoubleArray extends HeatedPlate {
 		// plus two extra rows and columns to hold edge temperatures
 		// Initialize the temperatures of the edge values and the plate itself
 		// plus two extra rows and columns to hold edge temperatures
-		oldPlate = new double[dimension + 2][dimension + 2];
+		oldPlate = new double[dimension + 2][dimension + 2];		
 		newPlate = new double[dimension + 2][dimension + 2];
 
 		// Initialize the temperatures of the edge values and the plate itself
 		for (int i = 0; i < oldPlate.length; i++) {
 			for (int j = 0; j < oldPlate[i].length; j++) {
-				if (i == 0)
+				if (i == 0){
 					oldPlate[i][j] = top;
-				if (i == oldPlate.length - 1)
+				}
+				if (i == oldPlate.length - 1){
 					oldPlate[i][j] = bottom;
-
-				if (j == 0)
+				}
+				if (j == 0){
 					oldPlate[i][j] = left;
-				if (j == oldPlate[i].length - 1)
+				}
+				if (j == oldPlate[i].length - 1){
 					oldPlate[i][j] = right;
+				}
 			}
 		}
 		newPlate = oldPlate;
@@ -58,7 +59,6 @@ public class DoubleArray extends HeatedPlate {
 			oldPlate = temp;
 			count++;
 		}
-
 	}
 
 	@Override
