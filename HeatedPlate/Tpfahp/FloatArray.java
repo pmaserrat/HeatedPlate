@@ -11,7 +11,6 @@ import common.HeatedPlate;
  */
 public class FloatArray extends HeatedPlate {
 	float[][] oldPlate, newPlate;
-	int totalSteps=1;
 
 	public FloatArray(String args[]) {
 		super(args);
@@ -50,7 +49,7 @@ public class FloatArray extends HeatedPlate {
 		// Loop until exit criteria are met, updating each newPlate cell from
 		// the average temperatures of the corresponding neighbors in oldPlate
 		boolean fluctuation=true;
-		while (fluctuation && totalSteps<this.maxSteps) {
+		while (fluctuation && iterationsCompleted<this.maxIterations) {
 			for (int i = 1; i <= dimension; i++) {
 				for (int j = 1; j <= dimension; j++) {
 					newPlate[i][j] = (oldPlate[i + 1][j] + oldPlate[i - 1][j]
@@ -74,7 +73,7 @@ public class FloatArray extends HeatedPlate {
 			float[][] temp = copyPlate(newPlate,new float[dimension + 2][dimension + 2]);
 			newPlate = copyPlate(oldPlate,newPlate);
 			oldPlate = copyPlate(temp,oldPlate);
-			totalSteps++;
+			iterationsCompleted++;
 		}
 	}
 
@@ -100,7 +99,8 @@ public class FloatArray extends HeatedPlate {
 		}		
 		System.out.println("-----------------------");
 		
-		System.out.println("\nTotal Steps: "+totalSteps);
+		System.out.println("\nMaximum Iterations: "+maxIterations);
+		System.out.println("Iterations Completed: "+iterationsCompleted);
 		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
 	}
 

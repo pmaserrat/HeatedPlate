@@ -11,7 +11,6 @@ import common.HeatedPlate;
  */
 public class DoubleArray extends HeatedPlate {
 	double[][] oldPlate, newPlate;
-	int totalSteps=1;
 
 	public DoubleArray(String args[]) {
 		super(args);
@@ -50,7 +49,7 @@ public class DoubleArray extends HeatedPlate {
 		// Loop until exit criteria are met, updating each newPlate cell from
 		// the average temperatures of the corresponding neighbors in oldPlate
 		boolean fluctuation=true;
-		while (fluctuation && totalSteps<this.maxSteps) {
+		while (fluctuation && iterationsCompleted<this.maxIterations) {
 			for (int i = 1; i <= dimension; i++) {
 				for (int j = 1; j <= dimension; j++) {
 					newPlate[i][j] = (oldPlate[i + 1][j] + oldPlate[i - 1][j]
@@ -74,7 +73,7 @@ public class DoubleArray extends HeatedPlate {
 			double[][] temp = copyPlate(newPlate,new double[dimension + 2][dimension + 2]);
 			newPlate = copyPlate(oldPlate,newPlate);
 			oldPlate = copyPlate(temp,oldPlate);
-			totalSteps++;
+			iterationsCompleted++;
 		}
 	}
 
@@ -89,7 +88,7 @@ public class DoubleArray extends HeatedPlate {
 
 	@Override
 	public void printResults() {
-		System.out.println("\n------ Results -------");
+		System.out.println("\n------ Results -------\n");
 		for (int i = 1; i < oldPlate.length-1; i++) {
 			for (int j = 1; j < oldPlate[i].length-1; j++) {
 				DecimalFormat numFormat=new DecimalFormat("#00.##");
@@ -100,7 +99,8 @@ public class DoubleArray extends HeatedPlate {
 		}		
 		System.out.println("-----------------------");
 		
-		System.out.println("\nTotal Steps: "+totalSteps);
+		System.out.println("\nMaximum Iterations: "+maxIterations);
+		System.out.println("Iterations Completed: "+iterationsCompleted);
 		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
 	}
 
