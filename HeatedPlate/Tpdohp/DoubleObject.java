@@ -29,7 +29,7 @@ public class DoubleObject extends HeatedPlate {
 				node.setTop((i-1)>=0?index-size:-1);
 				node.setRight((j<size-1)?index+1:-1);
 				node.setBottom((i<size-1)?index+size:-1);
-				int temp=0;
+				double temp=0;
 				if(i==0) {
 					temp=top;
 					node.setTopEdge(true);
