@@ -1,14 +1,16 @@
 package common;
 
+import java.text.DecimalFormat;
+
 public abstract class HeatedPlate {
 	protected int dimension; //dimension
-	protected int left; //temperature at for left edge
-	protected int right; //temperature at for right edge
-	protected int top; //temperature at for top edge
-	protected int bottom; //temperature at for bottom edge
+	protected double left; //temperature at for left edge
+	protected double right; //temperature at for right edge
+	protected double top; //temperature at for top edge
+	protected double bottom; //temperature at for bottom edge
 	
-	protected int maxSteps=200;
-	protected double fluctuationThreshold=0.005;
+	protected int maxSteps=400;
+	protected double fluctuationThreshold=0.001;
 	
 	public HeatedPlate() {
 		super();
@@ -16,7 +18,7 @@ public abstract class HeatedPlate {
 	
 	//Used when running simulation from GUI (5th program) to instantiate heated plate from 
 	//parameters entered by user on the GUI. 
-	public HeatedPlate(int dimension,int left,int right,int top,int bottom ) {
+	public HeatedPlate(int dimension,double left,double right,double top,double bottom ) {
 		super();
 		this.dimension=dimension;
 		this.left=left;
@@ -39,19 +41,19 @@ public abstract class HeatedPlate {
 				} 
 				else if(args[i].equals("-l")) {
 					l=true;
-					left=Integer.parseInt(args[i+1]);
+					left=Double.parseDouble(args[i+1]);
 				}
 				else if(args[i].equals("-r")) {
 					r=true;
-					right=Integer.parseInt(args[i+1]);
+					right=Double.parseDouble(args[i+1]);
 				}
 				else if(args[i].equals("-t")) {
 					t=true;
-					top=Integer.parseInt(args[i+1]);
+					top=Double.parseDouble(args[i+1]);
 				}
 				else if(args[i].equals("-b")) {
 					b=true;
-					bottom=Integer.parseInt(args[i+1]);
+					bottom=Double.parseDouble(args[i+1]);
 				}
 			}
 			if(!d || !l || !r || !t || !b) {
@@ -62,8 +64,9 @@ public abstract class HeatedPlate {
 			}
 			if(dimension == 1) {
 				double avgTemp;
-				avgTemp = (top + bottom + left + right) / 4;
-				System.out.println("Oh! That's an easy one: " + avgTemp);
+				avgTemp = (top + bottom + left + right) / 4.0;
+				DecimalFormat numFormat=new DecimalFormat("#00.##");
+				System.out.println("Oh! That's an easy one: " + numFormat.format(avgTemp));
 			}
 			System.out.println("Arguments: dimension - "+dimension+", left - "+left+", right - "+right+", top - "+top+", bottom - "+bottom);
 		}
