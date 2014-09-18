@@ -84,3 +84,4 @@ public abstract class HeatedPlate {
 	    System.out.println("-----------------------------------------");
 	}
 }
+
