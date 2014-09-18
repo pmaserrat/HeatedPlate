@@ -7,6 +7,8 @@ public abstract class HeatedPlate {
 	protected int top; //temperature at for top edge
 	protected int bottom; //temperature at for bottom edge
 	
+	protected int maxSteps=200;
+	
 	public HeatedPlate() {
 		super();
 	}
@@ -54,6 +56,14 @@ public abstract class HeatedPlate {
 			if(!d || !l || !r || !t || !b) {
 				throw new RuntimeException(message);
 			}
+			if(dimension == 0) {
+				System.out.println("It appears that your plate doesn't have any dimensions. Did it fall into a black hole? \r\n\r\n When you get a new one, you can try again.");
+			}
+			if(dimension == 1) {
+				double avgTemp;
+				avgTemp = (top + bottom + left + right) / 4;
+				System.out.println("Oh! That's an easy one: " + avgTemp);
+			}
 			System.out.println("Arguments: dimension - "+dimension+", left - "+left+", right - "+right+", top - "+top+", bottom - "+bottom);
 		}
 		catch(Exception e) {
@@ -63,4 +73,14 @@ public abstract class HeatedPlate {
 	public abstract void simulate();
 	
 	public abstract void printResults();
+	
+	public void printPerformanceReport(long processingTime) {
+		System.out.println("\n--------- Performance Report ----------");
+		System.out.println("Processing Time : "+processingTime+" milliseconds");
+	    double currentMemory = ( (double)((double)(Runtime.getRuntime().totalMemory()/1024)/1024))- ((double)((double)(Runtime.getRuntime().freeMemory()/1024)/1024));
+	    System.out.println("Memory Used : "+currentMemory+" megabytes");
+	    System.out.println("Free Memory : "+((double)((double)(Runtime.getRuntime().freeMemory()/1024)/1024))+" megabytes");
+	    System.out.println("Total Memory : "+( (double)((double)(Runtime.getRuntime().totalMemory()/1024)/1024))+" megabytes");
+	    System.out.println("-----------------------------------------");
+	}
 }
