@@ -96,7 +96,7 @@ public class DoubleArray extends HeatedPlate {
 			    String temp = numFormat.format(oldPlate[i][j]);
 				System.out.print(temp+"\t");
 			}
-			System.out.print("\n");
+			System.out.print("\n\n");
 		}		
 		System.out.println("-----------------------");
 		

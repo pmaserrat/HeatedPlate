@@ -106,7 +106,7 @@ public class DoubleObject extends HeatedPlate {
 		for(int i=0;i<plate.size();i++) {
 			Node node=plate.get(i);		
 			if(node.isRightEdge() && !node.isBottomEdge()) {
-				System.out.print("\n");
+				System.out.print("\n\n");
 			}
 			else if(node.isEdge()) continue;
 			else {
