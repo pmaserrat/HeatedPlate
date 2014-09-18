@@ -1,9 +1,8 @@
 package Tpdohp;
 
 public abstract class SimpleNode {
-	protected int x;
-	protected int y;
-	protected double temperature, top, bottom, left, right;
+	protected int x, y;
+	protected double temperature;
 	
 	public void SimpleNode(int x, int y) {
 		this.x = x;
@@ -11,28 +10,11 @@ public abstract class SimpleNode {
 		temperature = 0;
 	}
 	
-	public double top(HashMap lattice) {
-		return lattice.get(x.ToString + "," + (y + 1).ToString()).temperature;
-	}
-	
-	public double bottom(HashMap lattice) {
-		return lattice.get(x.ToString + "," + (y - 1).ToString()).temperature;
-	}
-	
-	public double left(HashMap lattice) {
-		return lattice.get((x - 1).ToString + "," + (y).ToString()).temperature;
-	}
-	
-	public double right(HashMap lattice) {
-		return lattice.get((x + 1).ToString + "," + (y).ToString()).temperature;
-	}
-}
-
-public class ContextNode extends SimpleNode {
-	protected double 
-	
-	public ContextNode(int x, int y) {
-		
+	public double updateTemp(HashMap lattice) {
+		return (lattice.get(x.ToString + "," + (y + 1).ToString()).temperature +
+				lattice.get(x.ToString + "," + (y - 1).ToString()).temperature +
+				lattice.get((x - 1).ToString + "," + (y).ToString()).temperature +
+				lattice.get((x + 1).ToString + "," + (y).ToString()).temperature) / 4
 	}
 }
 
@@ -69,25 +51,24 @@ public class DoubleObject extends HeatedPlate{
 		}
 		
 		int iteration = 0; //let's move iterations and fluctuation threshold to HeatedPlate class;
-		double fluct;
-		double oldTemp;
-		ContextNode swap = new ContextNode();
+		double fluct, oldTemp;
+		fluct = 1;
+		SimpleNode swap = new SimpleNode();
 		
-		while(fluct > 1.0 && iteration < 200) {
+		while(fluct > 0.005 && iteration < 200) {
+			
+			fluct = oldTemp = 0;
+			
 			for (int i = 1; i <= dimension; i++) {
 				for (int j = 1; j <= dimension; j++) {
 					swap = lattice.get(i.ToString() + "," + j.ToString());
-					oldTemp = swap.temperature;
-					
-					swap.temperature = (swap.top(lattice) + 
-										swap.bottom(lattice) + 
-										swap.left(lattice) + 
-										swap.right(lattice)) 
-										/ 4.0;
-										
-					fluct = swap.temperature - oldTemp;
+					oldTemp = oldTemp + swap.temperature;
+					swap.temperature = swap.updateTemp(lattice);
+					fluct = fluct + swap.temperature;
 				}
 			}
+			
+			fluct = (fluct / dimension) - (oldTemp / dimension)
 		}
 	}
 }
