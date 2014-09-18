@@ -11,7 +11,6 @@ import common.HeatedPlate;
  */
 public class DoubleArray extends HeatedPlate {
 	double[][] oldPlate, newPlate;
-	double fluctuationThreshold=0.005;
 	int totalSteps=1;
 
 	public DoubleArray(String args[]) {
