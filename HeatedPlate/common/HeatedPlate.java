@@ -8,6 +8,7 @@ public abstract class HeatedPlate {
 	protected int bottom; //temperature at for bottom edge
 	
 	protected int maxSteps=200;
+	protected double fluctuationThreshold=0.005;
 	
 	public HeatedPlate() {
 		super();

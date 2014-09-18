@@ -8,7 +8,6 @@ import common.HeatedPlate;
 
 public class DoubleObject extends HeatedPlate {
 	Map<Integer, Node> plate;
-	double fluctuationThreshold=0.005;
 	int totalSteps=1;
 	
 	
