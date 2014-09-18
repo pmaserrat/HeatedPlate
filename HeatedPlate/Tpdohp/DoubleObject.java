@@ -6,197 +6,84 @@ import java.util.Map;
 
 import common.HeatedPlate;
 
-public class DoubleObject extends HeatedPlate {
-	Map<Integer, Node> plate;
-	int totalSteps=1;
-	
-	
+public class DoubleObject extends HeatedPlate{
+	Map<String, SimpleNode> lattice;
 	public DoubleObject(String args[]) {
 		super(args);
 	}
-	
+
 	@Override
 	public void simulate() {
-		plate = new HashMap<Integer, Node>();
-		
-		// Initialize the temperatures of the edge values and the plate itself
-		int size=dimension+2;
-		int index=0;
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				Node node=new Node();		
-				node.setLeft((j-1)>=0?index-1:-1);
-				node.setTop((i-1)>=0?index-size:-1);
-				node.setRight((j<size-1)?index+1:-1);
-				node.setBottom((i<size-1)?index+size:-1);
-				double temp=0;
-				if(i==0) {
-					temp=top;
-					node.setTopEdge(true);
-				}
-				if(i==size-1) {
-					temp=bottom;
-					node.setBottomEdge(true);
-				}
-				if(j==0) { 
-					temp=left;
-					node.setLeftEdge(true);
-				}
-				if(j==size-1) {
-					temp=right;
-					node.setRightEdge(true);
-				}
-				node.setTemp(temp);				
-				plate.put(index, node);
-				index++;
-			}			
-		}
-		
-		// Loop until exit criteria are met, updating each newPlate cell from
-		// the average temperatures of the corresponding neighbors in oldPlate
-		boolean fluctuation=true;
-		while (fluctuation && totalSteps<this.maxSteps) {
-			for(int i=0;i<plate.size();i++) {
-				Node node=plate.get(i);
-				if(node.isEdge()) continue;
-				double leftTemp=(node.getLeft()>=0?plate.get(node.getLeft()).getTemp():0);
-				double rightTemp=(node.getRight()>=0?plate.get(node.getRight()).getTemp():0);
-				double topTemp=(node.getTop()>=0?plate.get(node.getTop()).getTemp():0);
-				double bottomTemp=(node.getBottom()>=0?plate.get(node.getBottom()).getTemp():0);
-				double avgTemp=(leftTemp+rightTemp+topTemp+bottomTemp)/4.0;
-				node.setOldTemp(node.getTemp());
-				node.setTemp(avgTemp);
-				plate.put(i, node);
-			}
-			totalSteps++;
+		lattice = new HashMap<String, SimpleNode>();
+		SimpleNode myNode;		
+		for (int i = 0; i < dimension+2; i++) {
+			for (int j = 0; j < dimension+2; j++) {
+				myNode = new SimpleNode(i,j);
 			
-			fluctuation=false;
-			for(int i=0;i<plate.size();i++) {
-				Node node=plate.get(i);
-				if(node.isEdge()) continue;
-				if(node.getTemp()-node.getOldTemp()>fluctuationThreshold) {
-					fluctuation=true;
-					break;
+				if (i == 0){
+					myNode.temperature = top;
 				}
+				if (i == dimension + 1){
+					myNode.temperature = bottom;
+				}
+				if (j == 0){
+					myNode.temperature = left;
+				}
+				if (j == dimension + 1){
+					myNode.temperature = right;
+				}				
+				lattice.put(myNode.x + "," + myNode.y, myNode);
 			}
+		}		
+		double oldTemp;
+		SimpleNode swap = null;
+		boolean fluctExceeds=true;
+		while(fluctExceeds && iterationsCompleted < maxIterations) {	
+			fluctExceeds=false;
+			for (int i = 1; i <= dimension; i++) {
+				for (int j = 1; j <= dimension; j++) {
+					swap = lattice.get(i + "," + j);
+					oldTemp = swap.temperature;
+					swap.temperature = swap.updateTemp(lattice);					
+					if(swap.temperature-oldTemp>fluctuationThreshold) fluctExceeds=true;
+				}
+			}	
+			iterationsCompleted++;
 		}
-
-
 	}
-
-	public double getFluctuationThreshold() {
-		return fluctuationThreshold;
-	}
-
-	public void setFluctuationThreshold(double fluctuationThreshold) {
-		this.fluctuationThreshold = fluctuationThreshold;
-	}
-
-	public int getTotalSteps() {
-		return totalSteps;
-	}
-
-	public void setTotalSteps(int totalSteps) {
-		this.totalSteps = totalSteps;
+	
+	class SimpleNode {
+		protected int x, y;
+		protected double temperature;		
+		
+		public SimpleNode(int x, int y) {
+			this.x = x;
+			this.y = y;
+			temperature = 0;
+		}
+		
+		public double updateTemp(Map<String, SimpleNode> lattice) {
+			return (lattice.get(x + "," + (y + 1)).temperature +
+					lattice.get(x + "," + (y - 1)).temperature +
+					lattice.get((x - 1) + "," + (y)).temperature +
+					lattice.get((x + 1) + "," + (y)).temperature) / 4.0;
+		}
 	}
 
 	@Override
 	public void printResults() {
-		System.out.print("\n------ Results -------");
-		for(int i=0;i<plate.size();i++) {
-			Node node=plate.get(i);		
-			if(node.isRightEdge() && !node.isBottomEdge()) {
-				System.out.print("\n\n");
-			}
-			else if(node.isEdge()) continue;
-			else {
-			      DecimalFormat numFormat=new DecimalFormat("#00.##");
-			      String temp = numFormat.format(node.getTemp());
-
-				System.out.print(temp+"\t");
+		System.out.print("\n------ Results -------\n\n");
+		for (int i = 1; i <= dimension; i++) {
+			for (int j = 1; j <= dimension; j++) {
+				SimpleNode node = lattice.get(i + "," + j);
+				DecimalFormat numFormat=new DecimalFormat("#00.##");
+				System.out.print(numFormat.format(node.temperature)+"\t");
+				if(j==dimension) System.out.println("\n");
 			}
 		}
-		System.out.println("-----------------------");
-		
-		System.out.println("\nTotal Steps: "+totalSteps);
-		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);	
-	}
-	
-
-	class Node {
-		int left;
-		int right;
-		int top;
-		int bottom;
-		double temp;
-		double oldTemp;
-		boolean leftEdge;
-		boolean rightEdge;
-		boolean topEdge;
-		boolean bottomEdge;
-		
-		public int getLeft() {
-			return left;
-		}
-		public void setLeft(int left) {
-			this.left = left;
-		}
-		public int getRight() {
-			return right;
-		}
-		public void setRight(int right) {
-			this.right = right;
-		}
-		public int getTop() {
-			return top;
-		}
-		public void setTop(int top) {
-			this.top = top;
-		}
-		public int getBottom() {
-			return bottom;
-		}
-		public void setBottom(int bottom) {
-			this.bottom = bottom;
-		}
-		public double getTemp() {
-			return temp;
-		}
-		public void setTemp(double temp) {
-			this.temp = temp;
-		}
-		public double getOldTemp() {
-			 return oldTemp;
-		}
-		public void setOldTemp(double oldTemp) {
-			this.oldTemp = oldTemp;
-		}
-		public boolean isLeftEdge() {
-			return leftEdge;
-		}
-		public void setLeftEdge(boolean leftEdge) {
-			this.leftEdge = leftEdge;
-		}
-		public boolean isRightEdge() {
-			return rightEdge;
-		}
-		public void setRightEdge(boolean rightEdge) {
-			this.rightEdge = rightEdge;
-		}
-		public boolean isTopEdge() {
-			return topEdge;
-		}
-		public void setTopEdge(boolean topEdge) {
-			this.topEdge = topEdge;
-		}
-		public boolean isBottomEdge() {
-			return bottomEdge;
-		}
-		public void setBottomEdge(boolean bottomEdge) {
-			this.bottomEdge = bottomEdge;
-		}
-		public boolean isEdge() {
-			return leftEdge || rightEdge || topEdge || bottomEdge;
-		}
+		System.out.println("-----------------------");		
+		System.out.println("\nMaximum Iterations: "+maxIterations);
+		System.out.println("Iterations Completed: "+iterationsCompleted);
+		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
 	}
 }
