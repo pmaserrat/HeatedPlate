@@ -1,6 +1,8 @@
 package common;
 
 import java.text.DecimalFormat;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public abstract class HeatedPlate {
 	protected int dimension; //dimension
@@ -31,10 +33,10 @@ public abstract class HeatedPlate {
 	//Used when running simulation from command line.
 	public HeatedPlate(String[] args) {
 		boolean d = false,l = false,r=false,t=false,b=false;
-		String message="Invalid Arguments entered. Please enter the correct arguments and run it again.\n Syntax java <packageName>.Demo -d # -l # -r # -t # -b #";
+		String message="Invalid Arguments entered. Please enter the correct arguments and run it again.\n\nCommand syntax: java <packageName>.Demo -d # -l # -r # -t # -b #\n\t-d must be an integer\n\tall other arguments must be integers or real numbers in the range 0.0..100.0 inclusive";
 		//at least 10 arguments are required to process simulation.
 		try {
-			if(args.length<10) throw new RuntimeException(message);
+			if(args.length<10 || !validateArgs(args)) throw new RuntimeException(message);
 			for(int i=0;i<args.length;i++) {
 				if(args[i].equals("-d")) {
 					d=true;
@@ -75,6 +77,19 @@ public abstract class HeatedPlate {
 			throw new RuntimeException(message);
 		}
 	}
+
+	private boolean validateArgs(String[] args){
+		Pattern pattern = Pattern.compile("[^\\.\\d]");
+		Matcher matcher = pattern.matcher("");
+		for(int i = 1; i <= args.length; i += 2){
+			matcher = pattern.matcher(args[i]);
+			if (matcher.find()) {			
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public abstract void simulate();
 	
 	public abstract void printResults();
