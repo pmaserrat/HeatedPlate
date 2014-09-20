@@ -2,13 +2,15 @@ package Gallhp;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TextInputsPanel extends JPanel implements ActionListener{
+public class TextInputsPanel extends JPanel implements PropertyChangeListener{
 	
 	private JLabel dimensionLabel;
 	private JLabel leftLabel;
@@ -31,19 +33,29 @@ public class TextInputsPanel extends JPanel implements ActionListener{
         bottomLabel = new JLabel("Bottom: ");
         
         dimensionText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        dimensionText.addActionListener(this);
+        dimensionText.setValue(0);
+        dimensionText.setColumns(10);
+        dimensionText.addPropertyChangeListener("value", this);
         
         leftText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        leftText.addActionListener(this);
+        leftText.setValue(0);
+        leftText.setColumns(10);
+        leftText.addPropertyChangeListener("value", this);
         
         rightText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        rightText.addActionListener(this);
+        rightText.setValue(0);
+        rightText.setColumns(10);
+        rightText.addPropertyChangeListener("value", this);
         
         topText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        topText.addActionListener(this);
+        topText.setValue(0);
+        topText.setColumns(10);
+        topText.addPropertyChangeListener("value", this);
         
         bottomText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        bottomText.addActionListener(this);
+        bottomText.setValue(0);
+        bottomText.setColumns(10);
+        bottomText.addPropertyChangeListener("value", this);
         
         this.add(dimensionLabel);
         this.add(dimensionText);
@@ -56,9 +68,8 @@ public class TextInputsPanel extends JPanel implements ActionListener{
         this.add(bottomLabel);
         this.add(bottomText);
 	}
-	
-    public void actionPerformed(ActionEvent e) {
-		
+    
+    public void propertyChange(PropertyChangeEvent e) {
     }
 
 }
