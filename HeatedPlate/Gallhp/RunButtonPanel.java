@@ -23,6 +23,4 @@ public class RunButtonPanel extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 		
     }
-
-
 }

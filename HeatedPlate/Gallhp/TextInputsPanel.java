@@ -18,11 +18,17 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
 	private JLabel topLabel;
 	private JLabel bottomLabel;
 	
-	private JFormattedTextField dimensionText;
-	private JFormattedTextField leftText;
-    private JFormattedTextField rightText;
-    private JFormattedTextField topText;
-    private JFormattedTextField bottomText;
+	private JFormattedTextField dimensionField;
+	private JFormattedTextField leftField;
+    private JFormattedTextField rightField;
+    private JFormattedTextField topField;
+    private JFormattedTextField bottomField;
+    
+    private int dimension;
+    private int left;
+    private int right;
+    private int top;
+    private int bottom;
     
 	public TextInputsPanel() {
 		
@@ -32,44 +38,72 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
         topLabel = new JLabel("Top: ");
         bottomLabel = new JLabel("Bottom: ");
         
-        dimensionText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        dimensionText.setValue(0);
-        dimensionText.setColumns(10);
-        dimensionText.addPropertyChangeListener("value", this);
+        dimensionField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        dimensionField.setValue(0);
+        dimensionField.setColumns(10);
+        dimensionField.addPropertyChangeListener("value", this);
+        dimensionField.setDocument(new JTextFieldLimit(10));
         
-        leftText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        leftText.setValue(0);
-        leftText.setColumns(10);
-        leftText.addPropertyChangeListener("value", this);
+        leftField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        leftField.setValue(0);
+        leftField.setColumns(10);
+        leftField.addPropertyChangeListener("value", this);
+        leftField.setDocument(new JTextFieldLimit(3));
         
-        rightText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        rightText.setValue(0);
-        rightText.setColumns(10);
-        rightText.addPropertyChangeListener("value", this);
+        rightField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        rightField.setValue(0);
+        rightField.setColumns(10);
+        rightField.addPropertyChangeListener("value", this);
+        rightField.setDocument(new JTextFieldLimit(3));
         
-        topText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        topText.setValue(0);
-        topText.setColumns(10);
-        topText.addPropertyChangeListener("value", this);
+        topField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        topField.setValue(0);
+        topField.setColumns(10);
+        topField.addPropertyChangeListener("value", this);
+        topField.setDocument(new JTextFieldLimit(3));
         
-        bottomText = new JFormattedTextField(NumberFormat.getNumberInstance());
-        bottomText.setValue(0);
-        bottomText.setColumns(10);
-        bottomText.addPropertyChangeListener("value", this);
+        bottomField = new JFormattedTextField(NumberFormat.getNumberInstance());
+        bottomField.setValue(0);
+        bottomField.setColumns(10);
+        bottomField.addPropertyChangeListener("value", this);
+        bottomField.setDocument(new JTextFieldLimit(3));
         
         this.add(dimensionLabel);
-        this.add(dimensionText);
+        this.add(dimensionField);
         this.add(leftLabel);
-        this.add(leftText);
+        this.add(leftField);
         this.add(rightLabel);
-        this.add(rightText);
+        this.add(rightField);
         this.add(topLabel);
-        this.add(topText);
+        this.add(topField);
         this.add(bottomLabel);
-        this.add(bottomText);
+        this.add(bottomField);
 	}
     
     public void propertyChange(PropertyChangeEvent e) {
+    	Object source = e.getSource();
+    	if (source == dimensionField) {
+    		dimension = ((Number) dimensionField.getValue()).intValue();
+    	}
     }
-
+    
+    int getDimension() {
+    	return dimension;
+    }
+    
+    int getLeft() {
+    	return left;
+    }
+    
+    int getRight() {
+    	return right;
+    }
+    
+    int getTop() {
+    	return top;
+    }
+    
+    int getBottom() {
+    	return bottom;
+    }
 }
