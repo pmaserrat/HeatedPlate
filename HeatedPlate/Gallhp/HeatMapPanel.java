@@ -44,7 +44,6 @@ public class HeatMapPanel extends JPanel{
 		}
 	}
 	
-	
 	private Color getColor(float temp) {
 		if (temp <= 25) {
 			return new Color(0, 0, 1/temp);

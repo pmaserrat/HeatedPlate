@@ -1,14 +1,17 @@
 package Gallhp;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
@@ -25,6 +28,22 @@ public class GUIFrame extends JPanel implements ActionListener {
 	 */
 	public GUIFrame() {
 		super(new BorderLayout());
+		
+		JPanel tempsPanel = new JPanel(new GridLayout(1,0));
+        
+		JLabel dimensionLabel = new JLabel("Dimension: ");
+        JLabel leftLabel = new JLabel("Left: ");
+        JLabel rightLabel = new JLabel("Right: ");
+        JLabel topLabel = new JLabel("Top: ");
+        JLabel bottomLabel = new JLabel("Bottom: ");
+        
+        tempsPanel.add(dimensionLabel);
+        tempsPanel.add(leftLabel);
+        tempsPanel.add(rightLabel);
+        tempsPanel.add(topLabel);
+        tempsPanel.add(bottomLabel);
+        
+        add(tempsPanel, BorderLayout.NORTH);
 		
 		JRadioButton tpdahpRB = new JRadioButton(tpdahpString);
 		tpdahpRB.setMnemonic(KeyEvent.VK_P);
@@ -43,11 +62,17 @@ public class GUIFrame extends JPanel implements ActionListener {
         tpdohpRB.setMnemonic(KeyEvent.VK_O);
         tpdohpRB.setActionCommand(tpdohpString);
         
+        JButton runButton = new JButton("Run");
+        runButton.setToolTipText("Run for selected items");
+        runButton.setActionCommand("run");
+        runButton.setSize(new Dimension(50, 30));
+        
 	    ButtonGroup group = new ButtonGroup();
 	    group.add(tpdahpRB);
 	    group.add(tpfahpRB);
 	    group.add(twfahpRB);
 	    group.add(tpdohpRB);
+	    group.add(runButton);
 	    
 	    tpdahpRB.addActionListener(this);
 	    tpfahpRB.addActionListener(this);
@@ -55,13 +80,14 @@ public class GUIFrame extends JPanel implements ActionListener {
 	    tpdohpRB.addActionListener(this);
 		
 	    JPanel radioPanel = new JPanel(new GridLayout(0, 1));
-	    radioPanel.setSize(60, 120);
+	    //radioPanel.setPreferredSize(new Dimension(200,200));
         radioPanel.add(tpdahpRB);
         radioPanel.add(tpfahpRB);
         radioPanel.add(twfahpRB);
         radioPanel.add(tpdohpRB);
+        radioPanel.add(runButton);
         
-        add(radioPanel, BorderLayout.LINE_START);
+        add(radioPanel, BorderLayout.WEST);
         setBorder(BorderFactory.createEmptyBorder(20,40,20,20));
         
         JPanel heatPanel = new HeatMapPanel(5);
