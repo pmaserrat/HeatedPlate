@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.FlowLayout;
 
 public class GUIFrame extends JPanel implements ActionListener {
 	
@@ -29,6 +30,13 @@ public class GUIFrame extends JPanel implements ActionListener {
         
         JPanel heatPanel = new HeatMapPanel(5);
         add(heatPanel, BorderLayout.CENTER);
+        
+        JImageComponent ic = new JImageComponent("assets/tempature_gradient.jpg");
+        JPanel imagePanel = new JPanel();
+        imagePanel.add(ic);
+        FlowLayout flowLayout = (FlowLayout) imagePanel.getLayout();
+        flowLayout.setAlignment(FlowLayout.RIGHT);
+        heatPanel.add(imagePanel);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
