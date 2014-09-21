@@ -1,6 +1,8 @@
 package Tpdahp;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import common.HeatedPlate;
 
@@ -17,13 +19,14 @@ public class DoubleArray extends HeatedPlate {
 	}
 
 	@Override
-	public void simulate() {
+	public Map<Integer,double[][]> simulate() {
 		// Create arrays oldPlate and newPlate with linear dimension d
 		// plus two extra rows and columns to hold edge temperatures
 		// Initialize the temperatures of the edge values and the plate itself
 		// plus two extra rows and columns to hold edge temperatures
 		oldPlate = new double[dimension + 2][dimension + 2];		
 		newPlate = new double[dimension + 2][dimension + 2];
+		result=new HashMap<Integer, double[][]>();
 
 		// Initialize the temperatures of the edge values and the plate itself
 		for (int i = 0; i < oldPlate.length; i++) {
@@ -73,8 +76,10 @@ public class DoubleArray extends HeatedPlate {
 			double[][] temp = copyPlate(newPlate,new double[dimension + 2][dimension + 2]);
 			newPlate = copyPlate(oldPlate,newPlate);
 			oldPlate = copyPlate(temp,oldPlate);
+			result.put(iterationsCompleted-1, newPlate);
 			iterationsCompleted++;
 		}
+		return result;
 	}
 
 	private double[][]  copyPlate(double[][] oldPlate,double[][] newPlate) {
@@ -87,7 +92,30 @@ public class DoubleArray extends HeatedPlate {
 	}
 
 	@Override
-	public void printResults() {
+	public void printResults(Map<Integer,double[][]> result) {
+		System.out.println("\n------ Results -------\n");
+		for(int k=0;k<result.size();k++) {
+			System.out.println("------ Iteration "+k+"----\n");
+			double[][] plate=result.get(k);
+			for (int i = 1; i < plate.length-1; i++) {
+				for (int j = 1; j < plate[i].length-1; j++) {
+					DecimalFormat numFormat=new DecimalFormat("#00.##");
+				    String temp = numFormat.format(plate[i][j]);
+					System.out.print(temp+"\t");
+				}
+				System.out.print("\n\n");
+			}	
+			System.out.println("-----------------------");
+		}
+		System.out.println("-----------------------");
+		
+		System.out.println("\nMaximum Iterations: "+maxIterations);
+		System.out.println("Iterations Completed: "+iterationsCompleted);
+		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
+	}
+	
+
+	public void printResults1() {
 		System.out.println("\n------ Results -------\n");
 		for (int i = 1; i < oldPlate.length-1; i++) {
 			for (int j = 1; j < oldPlate[i].length-1; j++) {

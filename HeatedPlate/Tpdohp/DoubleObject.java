@@ -7,14 +7,15 @@ import java.util.Map;
 import common.HeatedPlate;
 
 public class DoubleObject extends HeatedPlate{
-	Map<String, SimpleNode> lattice;
+	Map<String, SimpleNode> lattice;	
 	public DoubleObject(String args[]) {
 		super(args);
 	}
 
 	@Override
-	public void simulate() {
+	public Map<Integer,double[][]> simulate() {
 		lattice = new HashMap<String, SimpleNode>();
+		result=new HashMap<Integer, double[][]>();
 		SimpleNode myNode;		
 		for (int i = 0; i < dimension+2; i++) {
 			for (int j = 0; j < dimension+2; j++) {
@@ -48,9 +49,12 @@ public class DoubleObject extends HeatedPlate{
 					if(swap.temperature-oldTemp>fluctuationThreshold) fluctExceeds=true;
 				}
 			}	
+			result.put(iterationsCompleted-1, convert());
 			iterationsCompleted++;
 		}
+		return result;
 	}
+	
 	
 	class SimpleNode {
 		protected int x, y;
@@ -70,8 +74,7 @@ public class DoubleObject extends HeatedPlate{
 		}
 	}
 
-	@Override
-	public void printResults() {
+	public void printResults_bkp() {
 		System.out.print("\n------ Results -------\n\n");
 		for (int i = 1; i <= dimension; i++) {
 			for (int j = 1; j <= dimension; j++) {
@@ -85,5 +88,16 @@ public class DoubleObject extends HeatedPlate{
 		System.out.println("\nMaximum Iterations: "+maxIterations);
 		System.out.println("Iterations Completed: "+iterationsCompleted);
 		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
+	}
+	
+	public double[][] convert() {
+		double[][] result=new double[dimension][dimension];
+		for (int i = 1; i <= dimension; i++) {
+			for (int j = 1; j <= dimension; j++) {
+				SimpleNode node = lattice.get(i + "," + j);
+				result[i-1][j-1]=node.temperature;
+			}
+		}
+		return result;
 	}
 }
