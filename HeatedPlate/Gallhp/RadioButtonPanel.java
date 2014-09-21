@@ -16,8 +16,10 @@ public class RadioButtonPanel extends JPanel implements ActionListener{
     static String tpfahpString = "Tpfahp";
     static String twfahpString = "Twfahp";
     static String tpdohpString = "Tpdohp";
+    private String selection;
 	
     public RadioButtonPanel() {
+    	selection = tpdahpString;
 		JRadioButton tpdahpRB = new JRadioButton(tpdahpString);
 		tpdahpRB.setMnemonic(KeyEvent.VK_P);
 	    tpdahpRB.setActionCommand(tpdahpString);
@@ -53,7 +55,10 @@ public class RadioButtonPanel extends JPanel implements ActionListener{
     }
     
     public void actionPerformed(ActionEvent e) {
-		
+		selection = e.getActionCommand();
     }
-
+    
+    public String getSelection() {
+    	return selection;
+    }
 }

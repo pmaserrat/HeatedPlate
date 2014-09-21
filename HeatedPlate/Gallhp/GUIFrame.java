@@ -1,20 +1,31 @@
 package Gallhp;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Tpdahp.DoubleArray;
+import Tpdohp.DoubleObject;
+import Tpfahp.FloatArray;
+import Twfahp.WFloatArray;
+import common.HeatedPlate;
+
 import java.awt.FlowLayout;
 
 public class GUIFrame extends JPanel implements ActionListener {
 	
-    private String plate;
+    private HeatedPlate plate;
+    private RadioButtonPanel radioPanel;
+    private TextInputsPanel tempsPanel;
 
 	/**
 	 * Create the frame.
@@ -22,25 +33,66 @@ public class GUIFrame extends JPanel implements ActionListener {
 	public GUIFrame() {
 		super(new BorderLayout());
 		
-		JPanel tempsPanel = new TextInputsPanel();
+		JButton runButton = new JButton("Run");
+	    runButton.setToolTipText("Run for selected items");
+	    runButton.setActionCommand("run");
+	    runButton.addActionListener(this);
+		
+		tempsPanel = new TextInputsPanel();
         add(tempsPanel, BorderLayout.NORTH);  
 		
-	    JPanel radioPanel = new RadioButtonPanel();
+	    radioPanel = new RadioButtonPanel();
 	    add(radioPanel, BorderLayout.WEST);
-	    
-	    JPanel runButtonPanel = new RunButtonPanel();
-	    add(runButtonPanel, BorderLayout.EAST);
         
         JPanel heatPanel = new HeatMapPanel(5);
         add(heatPanel, BorderLayout.CENTER);
         
+        JPanel panel = new JPanel(new GridLayout(2,1));
+        add(panel, BorderLayout.EAST);
+        JPanel runButtonPanel = new JPanel();
+	    runButtonPanel.add(runButton);
+	    panel.add(runButtonPanel, BorderLayout.NORTH);
+        
         JPanel imagePanel = new JPanel();
         imagePanel.add(new JLabel(new ImageIcon(GUIFrame.class.getResource("/Gallhp/assets/tempature_gradient.png"))));
-        add(imagePanel, BorderLayout.EAST);
+        panel.add(imagePanel, BorderLayout.SOUTH);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		
+		if(e.getActionCommand() == "run") {
+			if(radioPanel.getSelection() == radioPanel.tpdahpString) {
+				plate = new DoubleArray(
+						tempsPanel.getDimension(), 
+						(double)tempsPanel.getLeft(), 
+						(double)tempsPanel.getRight(), 
+						(double)tempsPanel.getTop(), 
+						(double)tempsPanel.getBottom());
+			}
+			else if(radioPanel.getSelection() == radioPanel.tpfahpString) {
+				plate = new FloatArray(
+						tempsPanel.getDimension(),
+						(double)tempsPanel.getLeft(),
+						(double)tempsPanel.getRight(),
+						(double)tempsPanel.getTop(),
+						(double)tempsPanel.getBottom())
+			}
+			else if(radioPanel.getSelection() == radioPanel.twfahpString) {
+				plate = new WFloatArray(
+						tempsPanel.getDimension(),
+						(double)tempsPanel.getLeft(),
+						(double)tempsPanel.getRight(),
+						(double)tempsPanel.getTop(),
+						(double)tempsPanel.getBottom())
+			}
+			else if(radioPanel.getSelection() == radioPanel.tpdohpString) {
+				plate = new DoubleObject(
+						tempsPanel.getDimension(),
+						(double)tempsPanel.getLeft(),
+						(double)tempsPanel.getRight(),
+						(double)tempsPanel.getTop(),
+						(double)tempsPanel.getBottom())	
+			}
+		}
     }
 	
 	/**
