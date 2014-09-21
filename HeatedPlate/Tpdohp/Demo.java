@@ -1,4 +1,6 @@
 package Tpdohp;
+import java.util.Map;
+
 import common.HeatedPlate;
 
 /**
@@ -13,7 +15,7 @@ public class Demo {
 			long start=System.currentTimeMillis();
 			System.out.println("Demo of DoubleObject Heated Plate Simulation. (Tpdohp)");
 			HeatedPlate demo=new DoubleObject(args);
-			demo.simulate();
+			Map<Integer,double[][]> result=demo.simulate();
 			long end=System.currentTimeMillis();
 			demo.printResults();
 			demo.printPerformanceReport(end-start);

@@ -1,6 +1,7 @@
 package common;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 
 public abstract class HeatedPlate {
 	protected int dimension; //dimension
@@ -12,6 +13,8 @@ public abstract class HeatedPlate {
 	protected int maxIterations=200;
 	protected double fluctuationThreshold=0.005;
 	protected int iterationsCompleted=1;
+	
+	protected Map<Integer, double[][]> result;
 	
 	public HeatedPlate() {
 		super();
@@ -75,7 +78,7 @@ public abstract class HeatedPlate {
 			throw new RuntimeException(message);
 		}
 	}
-	public abstract void simulate();
+	public abstract Map<Integer,double[][]> simulate();
 	
 	public abstract void printResults();
 	
