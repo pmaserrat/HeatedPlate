@@ -11,8 +11,6 @@ public class HeatMapPanel extends JPanel{
 	
 	private int panelSize = 760;
 	private int blockSize;
-	private int blockRow = 0;
-	private int blockColumn = 0;
 	private Map<Integer,double[][]> plate;
 	private int plateDimension;
 	private int iteration;
@@ -35,20 +33,16 @@ public class HeatMapPanel extends JPanel{
 		if(plate != null) {
 			for(int i=0;i < plateDimension;i++) {
 				for(int j=0;j < plateDimension;j++) {
-					blockRow = i + 1;
-					blockColumn = j + 1;
 					g.setColor(getColor((float)currPlate[i][j]));
-					g.fillRect(blockSize * blockRow, blockSize * blockColumn, blockSize, blockSize);
+					g.fillRect(blockSize * j, blockSize * i, blockSize, blockSize);
 				}
 			}
 		}
 		else {
 			for(int i=0;i < plateDimension;i++) {
 				for(int j=0;j < plateDimension;j++) {
-					blockRow = i + 1;
-					blockColumn = j + 1;
 					g.setColor(Color.BLACK);
-					g.fillRect(blockSize * blockRow, blockSize * blockColumn, blockSize, blockSize);
+					g.fillRect(blockSize * j, blockSize * i, blockSize, blockSize);
 				}
 			}
 		}
@@ -56,17 +50,12 @@ public class HeatMapPanel extends JPanel{
 	
 	private Color getColor(float temp) {
 		if (temp <= 25) {
-			//System.out.println("value of float " + temp);
 			return new Color(0, 0, temp/100);
 		}
 		else if (temp > 25 && temp < 75) {
-			System.out.println("value of float " + temp);
-			System.out.println("RGB:" + (temp/100) + "," + "0" + "," + ((100-temp)/100));
 			return new Color(temp/100, 0, (100-temp)/100);
 		}
 		else {
-			//System.out.println("value of float " + temp);
-			System.out.println("RGB:" + (temp/100) + "," + (temp/100) + "," + (temp/100));
 			return new Color(temp/100, temp/100, temp/100);
 		}
 	}
