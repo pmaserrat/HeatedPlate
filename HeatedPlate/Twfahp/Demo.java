@@ -18,8 +18,11 @@ public class Demo {
 			demo.printResults(result);
 			demo.printPerformanceReport(end-start);
 		}
+		catch(java.lang.OutOfMemoryError e) {
+			System.out.println("System ran out of memory. Your plate is probably too big.");
+		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println(e);
 		}
 	}
 }
