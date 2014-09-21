@@ -17,7 +17,7 @@ public class Demo {
 			HeatedPlate demo=new DoubleObject(args);
 			Map<Integer,double[][]> result=demo.simulate();
 			long end=System.currentTimeMillis();
-			demo.printResults();
+			demo.printResults(result);
 			demo.printPerformanceReport(end-start);
 		}
 		catch(java.lang.OutOfMemoryError e) {

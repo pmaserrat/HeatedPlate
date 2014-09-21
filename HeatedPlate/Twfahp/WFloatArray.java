@@ -1,6 +1,8 @@
 package Twfahp;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import common.HeatedPlate;
 
@@ -12,14 +14,15 @@ public class WFloatArray extends HeatedPlate {
 	}
 
 	@Override
-	public void simulate() {
+	public Map<Integer,double[][]> simulate() {
 		// Create arrays oldPlate and newPlate with linear dimension d
 		// plus two extra rows and columns to hold edge temperatures
 		// Initialize the temperatures of the edge values and the plate itself
 		// plus two extra rows and columns to hold edge temperatures
 		oldPlate = new Float[dimension + 2][dimension + 2];		
 		newPlate = new Float[dimension + 2][dimension + 2];
-
+		result=new HashMap<Integer, double[][]>();
+		
 		// Initialize the temperatures of the edge values and the plate itself
 		for (int i = 0; i < oldPlate.length; i++) {
 			for (int j = 0; j < oldPlate[i].length; j++) {
@@ -69,10 +72,22 @@ public class WFloatArray extends HeatedPlate {
 			Float[][] temp = copyPlate(newPlate,new Float[dimension + 2][dimension + 2]);
 			newPlate = copyPlate(oldPlate,newPlate);
 			oldPlate = copyPlate(temp,oldPlate);
+			result.put(iterationsCompleted-1, convert());
 			iterationsCompleted++;
 		}
+		return result;
 	}
 
+	public double[][] convert() {
+		double[][] result=new double[dimension][dimension];
+		for (int i = 1; i < oldPlate.length-1; i++) {			
+			for (int j = 1; j < oldPlate[i].length-1; j++) {
+				result[i-1][j-1]=oldPlate[i][j];
+			}
+		}
+		return result;
+	}
+	
 	private Float[][]  copyPlate(Float[][] oldPlate,Float[][] newPlate) {
 		for (int i = 0; i < oldPlate.length; i++) {
 			for (int j = 0; j < oldPlate[i].length; j++) {
@@ -82,8 +97,8 @@ public class WFloatArray extends HeatedPlate {
 		return newPlate;
 	}
 
-	@Override
-	public void printResults() {
+
+	public void printResults_bkp() {
 		System.out.println("\n------ Results -------");
 		for (int i = 1; i < oldPlate.length-1; i++) {
 			for (int j = 1; j < oldPlate[i].length-1; j++) {

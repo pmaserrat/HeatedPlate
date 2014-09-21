@@ -74,8 +74,7 @@ public class DoubleObject extends HeatedPlate{
 		}
 	}
 
-	@Override
-	public void printResults() {
+	public void printResults_bkp() {
 		System.out.print("\n------ Results -------\n\n");
 		for (int i = 1; i <= dimension; i++) {
 			for (int j = 1; j <= dimension; j++) {

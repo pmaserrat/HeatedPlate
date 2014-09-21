@@ -94,8 +94,29 @@ public abstract class HeatedPlate {
 		}
 		return true;
 	}
-
-	public abstract void printResults();
+	
+	public void printResults(Map<Integer,double[][]> result) {
+		System.out.println("\n------ Results -------\n");
+		for(int k=0;k<result.size();k++) {
+			System.out.println("------ Iteration "+k+"----\n");
+			double[][] plate=result.get(k);
+			for (int i = 0; i < plate.length; i++) {
+				for (int j = 0; j < plate[i].length; j++) {
+					DecimalFormat numFormat=new DecimalFormat("#00.##");
+				    String temp = numFormat.format(plate[i][j]);
+					System.out.print(temp+"\t");
+				}
+				System.out.print("\n\n");
+			}	
+			System.out.println("-----------------------");
+		}
+		System.out.println("-----------------------");
+		
+		System.out.println("\nMaximum Iterations: "+maxIterations);
+		System.out.println("Iterations Completed: "+iterationsCompleted);
+		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
+	}
+	
 	
 	public void printPerformanceReport(long processingTime) {
 		System.out.println("\n--------- Performance Report ----------");
@@ -107,4 +128,3 @@ public abstract class HeatedPlate {
 	    System.out.println("-----------------------------------------");
 	}
 }
-
