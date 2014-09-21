@@ -40,31 +40,31 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
         
         dimensionField = new JFormattedTextField(NumberFormat.getNumberInstance());
         dimensionField.setValue(0);
-        dimensionField.setColumns(10);
+        dimensionField.setColumns(5);
         dimensionField.addPropertyChangeListener("value", this);
         dimensionField.setDocument(new JTextFieldLimit(10));
         
         leftField = new JFormattedTextField(NumberFormat.getNumberInstance());
         leftField.setValue(0);
-        leftField.setColumns(10);
+        leftField.setColumns(3);
         leftField.addPropertyChangeListener("value", this);
         leftField.setDocument(new JTextFieldLimit(3));
         
         rightField = new JFormattedTextField(NumberFormat.getNumberInstance());
         rightField.setValue(0);
-        rightField.setColumns(10);
+        rightField.setColumns(3);
         rightField.addPropertyChangeListener("value", this);
         rightField.setDocument(new JTextFieldLimit(3));
         
         topField = new JFormattedTextField(NumberFormat.getNumberInstance());
         topField.setValue(0);
-        topField.setColumns(10);
+        topField.setColumns(3);
         topField.addPropertyChangeListener("value", this);
         topField.setDocument(new JTextFieldLimit(3));
         
         bottomField = new JFormattedTextField(NumberFormat.getNumberInstance());
         bottomField.setValue(0);
-        bottomField.setColumns(10);
+        bottomField.setColumns(3);
         bottomField.addPropertyChangeListener("value", this);
         bottomField.setDocument(new JTextFieldLimit(3));
         
@@ -84,6 +84,18 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
     	Object source = e.getSource();
     	if (source == dimensionField) {
     		dimension = ((Number) dimensionField.getValue()).intValue();
+    	}
+    	else if (source == leftField) {
+    		left = ((Number)leftField.getValue()).intValue();
+    	}
+    	else if (source == rightField) {
+    		right = ((Number)rightField.getValue()).intValue();
+    	}
+    	else if (source == topField) {
+    		top = ((Number)topField.getValue()).intValue();
+    	}
+    	else if (source == bottomField) {
+    		bottom = ((Number)bottomField.getValue()).intValue();
     	}
     }
     

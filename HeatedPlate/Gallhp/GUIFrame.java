@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import java.awt.FlowLayout;
 
 public class GUIFrame extends JPanel implements ActionListener {
@@ -31,12 +34,9 @@ public class GUIFrame extends JPanel implements ActionListener {
         JPanel heatPanel = new HeatMapPanel(5);
         add(heatPanel, BorderLayout.CENTER);
         
-        JImageComponent ic = new JImageComponent("assets/tempature_gradient.jpg");
         JPanel imagePanel = new JPanel();
-        imagePanel.add(ic);
-        FlowLayout flowLayout = (FlowLayout) imagePanel.getLayout();
-        flowLayout.setAlignment(FlowLayout.RIGHT);
-        heatPanel.add(imagePanel);
+        imagePanel.add(new JLabel(new ImageIcon(GUIFrame.class.getResource("/Gallhp/assets/tempature_gradient.png"))));
+        add(imagePanel, BorderLayout.EAST);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
