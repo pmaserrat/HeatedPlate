@@ -60,7 +60,7 @@ public class GUIFrame extends JPanel implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == "run") {
-			if(radioPanel.getSelection() == radioPanel.tpdahpString) {
+			/*if(radioPanel.getSelection() == radioPanel.tpdahpString) {
 				plate = new DoubleArray(
 						tempsPanel.getDimension(), 
 						(double)tempsPanel.getLeft(), 
@@ -91,7 +91,7 @@ public class GUIFrame extends JPanel implements ActionListener {
 						(double)tempsPanel.getRight(),
 						(double)tempsPanel.getTop(),
 						(double)tempsPanel.getBottom())	
-			}
+			}*/
 		}
     }
 	
