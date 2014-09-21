@@ -12,6 +12,16 @@ public class DoubleObject extends HeatedPlate{
 		super(args);
 	}
 
+	public DoubleObject(int dimension, double left, double right, double top,
+			double bottom) {
+		super();
+		this.dimension=dimension;
+		this.left=left;
+		this.right=right;
+		this.top=top;
+		this.bottom=bottom;
+	}
+
 	@Override
 	public Map<Integer,double[][]> simulate() {
 		lattice = new HashMap<String, SimpleNode>();

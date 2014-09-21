@@ -20,12 +20,15 @@ import Twfahp.WFloatArray;
 import common.HeatedPlate;
 
 import java.awt.FlowLayout;
+import java.util.Map;
 
 public class GUIFrame extends JPanel implements ActionListener {
 	
-    private HeatedPlate plate;
+    //private HeatedPlate plate;
+    private Map<Integer,double[][]> plate;
     private RadioButtonPanel radioPanel;
     private TextInputsPanel tempsPanel;
+    private HeatMapPanel heatPanel;
 
 	/**
 	 * Create the frame.
@@ -44,9 +47,6 @@ public class GUIFrame extends JPanel implements ActionListener {
 	    radioPanel = new RadioButtonPanel();
 	    add(radioPanel, BorderLayout.WEST);
         
-        JPanel heatPanel = new HeatMapPanel(5);
-        add(heatPanel, BorderLayout.CENTER);
-        
         JPanel panel = new JPanel(new GridLayout(2,1));
         add(panel, BorderLayout.EAST);
         JPanel runButtonPanel = new JPanel();
@@ -59,9 +59,10 @@ public class GUIFrame extends JPanel implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		HeatedPlate simulationPlate = null;
 		if(e.getActionCommand() == "run") {
-			/*if(radioPanel.getSelection() == radioPanel.tpdahpString) {
-				plate = new DoubleArray(
+			if(radioPanel.getSelection() == radioPanel.tpdahpString) {
+				simulationPlate = new DoubleArray(
 						tempsPanel.getDimension(), 
 						(double)tempsPanel.getLeft(), 
 						(double)tempsPanel.getRight(), 
@@ -69,29 +70,44 @@ public class GUIFrame extends JPanel implements ActionListener {
 						(double)tempsPanel.getBottom());
 			}
 			else if(radioPanel.getSelection() == radioPanel.tpfahpString) {
-				plate = new FloatArray(
+				simulationPlate = new FloatArray(
 						tempsPanel.getDimension(),
 						(double)tempsPanel.getLeft(),
 						(double)tempsPanel.getRight(),
 						(double)tempsPanel.getTop(),
-						(double)tempsPanel.getBottom())
+						(double)tempsPanel.getBottom());
 			}
 			else if(radioPanel.getSelection() == radioPanel.twfahpString) {
-				plate = new WFloatArray(
+				simulationPlate = new WFloatArray(
 						tempsPanel.getDimension(),
 						(double)tempsPanel.getLeft(),
 						(double)tempsPanel.getRight(),
 						(double)tempsPanel.getTop(),
-						(double)tempsPanel.getBottom())
+						(double)tempsPanel.getBottom());
 			}
 			else if(radioPanel.getSelection() == radioPanel.tpdohpString) {
-				plate = new DoubleObject(
+				simulationPlate = new DoubleObject(
 						tempsPanel.getDimension(),
 						(double)tempsPanel.getLeft(),
 						(double)tempsPanel.getRight(),
 						(double)tempsPanel.getTop(),
-						(double)tempsPanel.getBottom())	
-			}*/
+						(double)tempsPanel.getBottom());
+			}
+			
+			if(simulationPlate != null) {
+				//long systemTime = System.currentTimeMillis();
+				plate = simulationPlate.simulate();
+				System.out.println("Simulation ran with " + plate.size() + " iterations.");
+				
+				heatPanel = new HeatMapPanel(tempsPanel.getDimension());
+				JLabel test = new JLabel("This is a test");
+				heatPanel.add(test);
+		        add(heatPanel, BorderLayout.CENTER);
+		        heatPanel.SimulateAndDisplayHeatMap(plate);
+			}
+			else {
+				//Print some error statement
+			}
 		}
     }
 	
