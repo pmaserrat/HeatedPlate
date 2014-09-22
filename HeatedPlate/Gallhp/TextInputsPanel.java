@@ -5,12 +5,18 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
+import java.text.ParseException;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.MaskFormatter;
 
-public class TextInputsPanel extends JPanel implements PropertyChangeListener{
+public class TextInputsPanel extends JPanel{
 	
 	private JLabel dimensionLabel;
 	private JLabel leftLabel;
@@ -18,17 +24,17 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
 	private JLabel topLabel;
 	private JLabel bottomLabel;
 	
-	private JFormattedTextField dimensionField;
-	private JFormattedTextField leftField;
-    private JFormattedTextField rightField;
-    private JFormattedTextField topField;
-    private JFormattedTextField bottomField;
+	private JTextField dimensionField;
+	private JTextField leftField;
+    private JTextField rightField;
+    private JTextField topField;
+    private JTextField bottomField;
     
-    private int dimension;
-    private int left;
-    private int right;
-    private int top;
-    private int bottom;
+    private String dimension;
+    private String left;
+    private String right;
+    private String top;
+    private String bottom;
     
 	public TextInputsPanel() {
 		
@@ -38,34 +44,24 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
         topLabel = new JLabel("Top: ");
         bottomLabel = new JLabel("Bottom: ");
         
-        dimensionField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        dimensionField.setValue(0);
-        dimensionField.setColumns(5);
-        dimensionField.addPropertyChangeListener("value", this);
-        dimensionField.setDocument(new JTextFieldLimit(10));
+        dimensionField = new JTextField();
+        dimensionField.setColumns(3);
+        dimensionField.setDocument(new JTextFieldLimit(3));
         
-        leftField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        leftField.setValue(0);
+        leftField = new JTextField();
         leftField.setColumns(3);
-        leftField.addPropertyChangeListener("value", this);
         leftField.setDocument(new JTextFieldLimit(3));
         
-        rightField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        rightField.setValue(0);
+        rightField = new JTextField();
         rightField.setColumns(3);
-        rightField.addPropertyChangeListener("value", this);
         rightField.setDocument(new JTextFieldLimit(3));
         
-        topField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        topField.setValue(0);
+        topField = new JTextField();
         topField.setColumns(3);
-        topField.addPropertyChangeListener("value", this);
         topField.setDocument(new JTextFieldLimit(3));
         
-        bottomField = new JFormattedTextField(NumberFormat.getNumberInstance());
-        bottomField.setValue(0);
+        bottomField = new JTextField();
         bottomField.setColumns(3);
-        bottomField.addPropertyChangeListener("value", this);
         bottomField.setDocument(new JTextFieldLimit(3));
         
         this.add(dimensionLabel);
@@ -80,42 +76,24 @@ public class TextInputsPanel extends JPanel implements PropertyChangeListener{
         this.add(bottomField);
 	}
     
-    public void propertyChange(PropertyChangeEvent e) {
-    	Object source = e.getSource();
-    	if (source == dimensionField) {
-    		dimension = ((Number) dimensionField.getValue()).intValue();
-    	}
-    	else if (source == leftField) {
-    		left = ((Number)leftField.getValue()).intValue();
-    	}
-    	else if (source == rightField) {
-    		right = ((Number)rightField.getValue()).intValue();
-    	}
-    	else if (source == topField) {
-    		top = ((Number)topField.getValue()).intValue();
-    	}
-    	else if (source == bottomField) {
-    		bottom = ((Number)bottomField.getValue()).intValue();
-    	}
-    }
-    
     int getDimension() {
-    	return dimension;
+    	return Integer.parseInt(dimensionField.getText());
     }
     
     int getLeft() {
-    	return left;
+    	return Integer.parseInt(leftField.getText());
     }
     
     int getRight() {
-    	return right;
+    	return Integer.parseInt(rightField.getText());
     }
     
     int getTop() {
-    	return top;
+    	return Integer.parseInt(topField.getText());
     }
     
     int getBottom() {
-    	return bottom;
+    	return Integer.parseInt(bottomField.getText());
+
     }
 }

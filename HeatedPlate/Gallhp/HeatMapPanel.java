@@ -11,10 +11,14 @@ public class HeatMapPanel extends JPanel{
 	
 	private int panelSize = 760;
 	private int blockSize;
-	private Map<Integer,double[][]> plate;
+	private Map<Integer,double[][]> plates;
 	private int plateDimension;
 	private int iteration;
 	private double[][] currPlate;
+	private int iterationDisplayTime;
+	private long timeSinceLastRepaint;
+	private int maxIterationDisplayTime = 2000;
+	private int totalMaxTimeToDisplayAllIterations = 30000;
 	
 	public HeatMapPanel(int dimension) {
        this.setPreferredSize(new Dimension(panelSize, panelSize));
@@ -25,12 +29,13 @@ public class HeatMapPanel extends JPanel{
     	   blockSize = 1;
        }
        plateDimension = dimension;
-       plate = null;
+       plates = null;
+       iteration = 0;
     }
 	
 	
 	protected void paintComponent (Graphics g) {
-		if(plate != null) {
+		if(plates != null) {
 			for(int i=0;i < plateDimension;i++) {
 				for(int j=0;j < plateDimension;j++) {
 					g.setColor(getColor((float)currPlate[i][j]));
@@ -42,7 +47,7 @@ public class HeatMapPanel extends JPanel{
 			for(int i=0;i < plateDimension;i++) {
 				for(int j=0;j < plateDimension;j++) {
 					g.setColor(Color.BLACK);
-					g.fillRect(blockSize * j, blockSize * i, blockSize, blockSize);
+					g.drawRect(blockSize * j, blockSize * i, blockSize, blockSize);
 				}
 			}
 		}
@@ -61,11 +66,29 @@ public class HeatMapPanel extends JPanel{
 	}
 	
 	public void SimulateAndDisplayHeatMap(Map<Integer,double[][]> simPlate) {
-		plate = simPlate;
-		currPlate = plate.get(plate.size() - 1);
-		iteration = plate.size() -1;
-		System.out.println("plate iteration " + iteration);
-		repaint();
+		plates = simPlate;
+		currPlate = plates.get(plates.size() - 1);
+		//System.out.println("plate iteration " + iteration);
+		if((plates.size() * maxIterationDisplayTime) < totalMaxTimeToDisplayAllIterations) {
+			iterationDisplayTime = maxIterationDisplayTime;
+		}
+		else {
+			iterationDisplayTime = totalMaxTimeToDisplayAllIterations / plates.size();
+		}
+		UpdatePlateForIterations();
+	}
+	
+	private void UpdatePlateForIterations() {
+		timeSinceLastRepaint = 0;
+		while(iteration < plates.size() - 1) {
+			if((System.currentTimeMillis() - timeSinceLastRepaint) > iterationDisplayTime) {
+				iteration++;
+				System.out.println("plate iteration:" + iteration + " CurrTime - last repaint:" + (System.currentTimeMillis() - timeSinceLastRepaint) + " IDT:" + iterationDisplayTime);
+				currPlate = plates.get(iteration);
+				repaint();
+				timeSinceLastRepaint = System.currentTimeMillis();
+			}
+		}
 	}
 
 }
