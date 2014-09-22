@@ -71,14 +71,12 @@ public class FloatArray extends HeatedPlate {
 			}
 			
 			fluctuation=false;
-			outerloop:
 			for (int i = 1; i <= dimension; i++) {
 				for (int j = 1; j <= dimension; j++) {
 					float oldTemp=oldPlate[i][j];
 					float newTemp=newPlate[i][j];
 					if(newTemp-oldTemp > (float) fluctuationThreshold) {
 						fluctuation=true;
-						break outerloop;
 					}
 				}
 			}
