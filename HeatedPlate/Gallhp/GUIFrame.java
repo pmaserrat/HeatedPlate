@@ -19,8 +19,9 @@ import Tpfahp.FloatArray;
 import Twfahp.WFloatArray;
 import common.HeatedPlate;
 
-import java.awt.FlowLayout;
 import java.util.Map;
+import java.awt.FlowLayout;
+import javax.swing.SwingConstants;
 
 public class GUIFrame extends JPanel implements ActionListener {
 	
@@ -46,15 +47,24 @@ public class GUIFrame extends JPanel implements ActionListener {
 		
 	    radioPanel = new RadioButtonPanel();
 	    add(radioPanel, BorderLayout.WEST);
+	    radioPanel.setLayout(new GridLayout(0, 1, 0, 0));
         
         JPanel panel = new JPanel(new GridLayout(2,1));
         add(panel, BorderLayout.EAST);
         JPanel runButtonPanel = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) runButtonPanel.getLayout();
+        flowLayout.setVgap(0);
+        flowLayout.setHgap(0);
 	    runButtonPanel.add(runButton);
 	    panel.add(runButtonPanel, BorderLayout.NORTH);
+	    
+	    heatPanel = new HeatMapPanel();
+        add(heatPanel, BorderLayout.CENTER);
         
         JPanel imagePanel = new JPanel();
-        imagePanel.add(new JLabel(new ImageIcon(GUIFrame.class.getResource("/Gallhp/assets/tempature_gradient.png"))));
+        JLabel label = new JLabel(new ImageIcon(GUIFrame.class.getResource("/Gallhp/assets/tempature_gradient.png")));
+        label.setVerticalAlignment(SwingConstants.TOP);
+        imagePanel.add(label);
         panel.add(imagePanel, BorderLayout.SOUTH);
 	}
 	
@@ -98,12 +108,7 @@ public class GUIFrame extends JPanel implements ActionListener {
 				//long systemTime = System.currentTimeMillis();
 				plate = simulationPlate.simulate();
 				System.out.println("Simulation ran with " + plate.size() + " iterations.");
-				
-				heatPanel = new HeatMapPanel(tempsPanel.getDimension());
-				JLabel test = new JLabel("This is a test");
-				heatPanel.add(test);
-		        add(heatPanel, BorderLayout.CENTER);
-		        heatPanel.SimulateAndDisplayHeatMap(plate);
+		        heatPanel.SimulateAndDisplayHeatMap(plate, tempsPanel.getDimension());
 			}
 			else {
 				//Print some error statement
@@ -120,7 +125,7 @@ public class GUIFrame extends JPanel implements ActionListener {
         //Create and set up the window.
         JFrame frame = new JFrame("Gallhp");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(100, 100, 450, 900);
+        frame.setBounds(100, 100, 450, 200);
  
         //Create and set up the content pane.
         JComponent newContentPane = new GUIFrame();

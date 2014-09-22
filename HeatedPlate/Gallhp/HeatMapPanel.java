@@ -20,15 +20,8 @@ public class HeatMapPanel extends JPanel{
 	private int maxIterationDisplayTime = 2000;
 	private int totalMaxTimeToDisplayAllIterations = 30000;
 	
-	public HeatMapPanel(int dimension) {
+	public HeatMapPanel() {
        this.setPreferredSize(new Dimension(panelSize, panelSize));
-       if(panelSize >= dimension) {
-    	   blockSize = panelSize / dimension;
-       }
-       else {
-    	   blockSize = 1;
-       }
-       plateDimension = dimension;
        plates = null;
        iteration = 0;
     }
@@ -44,12 +37,9 @@ public class HeatMapPanel extends JPanel{
 			}
 		}
 		else {
-			for(int i=0;i < plateDimension;i++) {
-				for(int j=0;j < plateDimension;j++) {
 					g.setColor(Color.BLACK);
-					g.drawRect(blockSize * j, blockSize * i, blockSize, blockSize);
-				}
-			}
+					g.drawRect(0, 0, panelSize, panelSize);
+
 		}
 	}
 	
@@ -65,7 +55,14 @@ public class HeatMapPanel extends JPanel{
 		}
 	}
 	
-	public void SimulateAndDisplayHeatMap(Map<Integer,double[][]> simPlate) {
+	public void SimulateAndDisplayHeatMap(Map<Integer,double[][]> simPlate, int dimension) {
+		if(panelSize >= dimension) {
+    	   blockSize = panelSize / dimension;
+        }
+        else {
+    	   blockSize = 1;
+        }
+	    plateDimension = dimension;
 		plates = simPlate;
 		currPlate = plates.get(plates.size() - 1);
 		//System.out.println("plate iteration " + iteration);
@@ -79,16 +76,19 @@ public class HeatMapPanel extends JPanel{
 	}
 	
 	private void UpdatePlateForIterations() {
-		timeSinceLastRepaint = 0;
-		while(iteration < plates.size() - 1) {
-			if((System.currentTimeMillis() - timeSinceLastRepaint) > iterationDisplayTime) {
-				iteration++;
-				System.out.println("plate iteration:" + iteration + " CurrTime - last repaint:" + (System.currentTimeMillis() - timeSinceLastRepaint) + " IDT:" + iterationDisplayTime);
-				currPlate = plates.get(iteration);
-				repaint();
-				timeSinceLastRepaint = System.currentTimeMillis();
-			}
-		}
+//		timeSinceLastRepaint = 0;
+//		while(iteration < plates.size() - 1) {
+//			if((System.currentTimeMillis() - timeSinceLastRepaint) > iterationDisplayTime) {
+//				iteration++;
+//				System.out.println("plate iteration:" + iteration + " CurrTime - last repaint:" + (System.currentTimeMillis() - timeSinceLastRepaint) 
+//						+ " IDT:" + iterationDisplayTime);
+//				currPlate = plates.get(iteration);
+//				repaint();
+//				timeSinceLastRepaint = System.currentTimeMillis();
+//			}
+//		}
+		currPlate = plates.get(plates.size() - 1);
+		repaint();
 	}
 
 }
