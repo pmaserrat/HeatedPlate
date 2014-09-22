@@ -37,9 +37,8 @@ public class HeatMapPanel extends JPanel{
 			}
 		}
 		else {
-					g.setColor(Color.BLACK);
-					g.drawRect(0, 0, panelSize, panelSize);
-
+			g.setColor(Color.BLACK);
+			g.drawRect(0, 0, panelSize, panelSize);
 		}
 	}
 	

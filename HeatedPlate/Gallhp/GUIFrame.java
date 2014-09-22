@@ -107,7 +107,6 @@ public class GUIFrame extends JPanel implements ActionListener {
 			if(simulationPlate != null) {
 				//long systemTime = System.currentTimeMillis();
 				plate = simulationPlate.simulate();
-				System.out.println("Simulation ran with " + plate.size() + " iterations.");
 		        heatPanel.SimulateAndDisplayHeatMap(plate, tempsPanel.getDimension());
 			}
 			else {
