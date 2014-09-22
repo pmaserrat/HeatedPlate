@@ -86,8 +86,18 @@ public class DoubleArray extends HeatedPlate {
 			double[][] temp = copyPlate(newPlate,new double[dimension + 2][dimension + 2]);
 			newPlate = copyPlate(oldPlate,newPlate);
 			oldPlate = copyPlate(temp,oldPlate);
-			result.put(iterationsCompleted-1, newPlate);
+			result.put(iterationsCompleted-1, convert());
 			iterationsCompleted++;
+		}
+		return result;
+	}
+	
+	public double[][] convert() {
+		double[][] result=new double[dimension][dimension];
+		for (int i = 1; i < oldPlate.length-1; i++) {			
+			for (int j = 1; j < oldPlate[i].length-1; j++) {
+				result[i-1][j-1]=oldPlate[i][j];
+			}
 		}
 		return result;
 	}
@@ -107,8 +117,8 @@ public class DoubleArray extends HeatedPlate {
 		for(int k=0;k<result.size();k++) {
 			System.out.println("------ Iteration "+k+"----\n");
 			double[][] plate=result.get(k);
-			for (int i = 1; i < plate.length-1; i++) {
-				for (int j = 1; j < plate[i].length-1; j++) {
+			for (int i = 0; i < plate.length; i++) {
+				for (int j = 0; j < plate[i].length; j++) {
 					DecimalFormat numFormat=new DecimalFormat("#00.##");
 				    String temp = numFormat.format(plate[i][j]);
 					System.out.print(temp+"\t");
@@ -117,24 +127,6 @@ public class DoubleArray extends HeatedPlate {
 			}	
 			System.out.println("-----------------------");
 		}
-		System.out.println("-----------------------");
-		
-		System.out.println("\nMaximum Iterations: "+maxIterations);
-		System.out.println("Iterations Completed: "+iterationsCompleted);
-		System.out.println("Fluctuation Threshold : "+fluctuationThreshold);
-	}
-	
-
-	public void printResults1() {
-		System.out.println("\n------ Results -------\n");
-		for (int i = 1; i < oldPlate.length-1; i++) {
-			for (int j = 1; j < oldPlate[i].length-1; j++) {
-				DecimalFormat numFormat=new DecimalFormat("#00.##");
-			    String temp = numFormat.format(oldPlate[i][j]);
-				System.out.print(temp+"\t");
-			}
-			System.out.print("\n\n");
-		}		
 		System.out.println("-----------------------");
 		
 		System.out.println("\nMaximum Iterations: "+maxIterations);
